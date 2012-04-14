@@ -22,8 +22,6 @@ By default the OffsetBones will also be carried from ME2 to ME3, but it can be d
 Preview (ME2)
 
   * *Left Mouse Click* - Select vertex
-  * *Left Mouse Drag* - Rotate view
-  * *Right Mouse Drag* - Zoom In/Out
   * *C* - Center on selected vertex
   * *Space* - Toggle Verified status
   * *R* - Toggle Ignored status
@@ -32,8 +30,13 @@ Preview (ME3)
 
   * *CTRL + Click* - Add vertex to map
   * *ALT + Click* - Remove vertex from map
+
+Both
+
   * *Left Mouse Drag* - Rotate view
   * *Right Mouse Drag* - Zoom In/Out
+  * *Numpad +* - Increase vertex size
+  * *Numpad -* - Decrease vertex size
 
 ----
 *In the shortcuts above there is mentioning of an IGNORE function. This was originally used to skip certain vertices during the adjustment, but the current release will only adjust vertices that have been marked as VERIFIED, thus the IGNORE option is now used simply as a color tag for better visualization.*
