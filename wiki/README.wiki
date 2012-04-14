@@ -35,7 +35,8 @@ Preview (ME3)
 Both
 
   * *Left Mouse Drag* - Rotate view
-  * *Right Mouse Drag* - Zoom In/Out
+  * *Right Mouse Drag* - Zoom in/out
+  * *Middle Mouse Drag* - Pan view
   * *Numpad +* - Increase vertex size
   * *Numpad -* - Decrease vertex size
 
