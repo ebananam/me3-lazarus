@@ -1,0 +1,34 @@
+#summary README.
+
+*NOTE: Currently only supports PC and FemShep.*
+----
+Normal use should look something like this:
+  # Start
+  # Open ME2 save
+  # Open ME3 save (should be the same character of ME2)
+  # Edit mapping (skippable)
+  # Save modified ME3 save (will be saved on same folder as in 2. as "Save_1000.pcsav")
+  # Repeat 4 and 5 as needed
+  # Exit
+
+Mapping is stored on the executable directory as "lod_mapping.xml".
+To start with a fresh map, simply delete the file and restart editor.
+
+----
+==Shortcuts==
+
+Preview (ME2)
+
+  * *Left Mouse Click* - Select vertex
+  * *Left Mouse Drag* - Rotate view
+  * *Right Mouse Drag* - Zoom In/Out
+  * *C* - Center on selected vertex
+  * *Space* - Toggle Verified status
+  * *R* - Toggle Ignored status
+
+Preview (ME3)
+
+  * *CTRL + Click* - Add vertex to map
+  * *ALT + Click* - Remove vertex from map
+  * *Left Mouse Drag* - Rotate view
+  * *Right Mouse Drag* - Zoom In/Out
