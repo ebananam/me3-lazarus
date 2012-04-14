@@ -324,27 +324,34 @@ namespace Pixelmade.Lazarus
                         Y = lod2[i].Y,
                         Z = lod2[i].Z
                     };
-                    if (mapping.Mapping[i].Count > 1)
+                    if (checkBoxMultiple.Checked)
                     {
-                        Vector3 avr = Vector3.Zero;
-                        foreach (int v in mapping.Mapping[i]) avr += new Vector3(lod3[v].X, lod3[v].Y, lod3[v].Z);
-                        avr /= mapping.Mapping[i].Count;
-                        Vector3 offset = new Vector3(vec.X, vec.Y, vec.Z) - avr;
-                        foreach (int v in mapping.Mapping[i])
+                        if (mapping.Mapping[i].Count > 1)
                         {
-                            Vector3 res = new Vector3(lod3[v].X, lod3[v].Y, lod3[v].Z) + offset;
+                            Vector3 avr = Vector3.Zero;
+                            foreach (int v in mapping.Mapping[i]) avr += new Vector3(lod3[v].X, lod3[v].Y, lod3[v].Z);
+                            avr /= mapping.Mapping[i].Count;
+                            Vector3 offset = new Vector3(vec.X, vec.Y, vec.Z) - avr;
+                            foreach (int v in mapping.Mapping[i])
+                            {
+                                Vector3 res = new Vector3(lod3[v].X, lod3[v].Y, lod3[v].Z) + offset;
 
-                            lod3[v].X = res.X;
-                            lod3[v].Y = res.Y;
-                            lod3[v].Z = res.Z;
+                                lod3[v].X = res.X;
+                                lod3[v].Y = res.Y;
+                                lod3[v].Z = res.Z;
+                            }
+                        }
+                        else if (mapping.Mapping[i].Count == 1)
+                        {
+                            foreach (int v in mapping.Mapping[i])
+                            {
+                                lod3[v] = vec;
+                            }
                         }
                     }
-                    else if (mapping.Mapping[i].Count == 1)
+                    else
                     {
-                        foreach (int v in mapping.Mapping[i])
-                        {
-                            lod3[v] = vec;
-                        }
+                        foreach (int v in mapping.Mapping[i]) lod3[v] = vec;
                     }
                 }
             }
