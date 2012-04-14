@@ -1,4 +1,6 @@
-*NOTE: Currently only supports PC and FemShep.*
+*NOTE #1: Currently only supports PC and FemShep.*
+
+*NOTE #2: Backup all your saves before using this :P *
 ----
 Normal use should look something like this:
   # Start
