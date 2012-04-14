@@ -96,6 +96,7 @@ namespace Pixelmade.Lazarus
             this.helpToolStripButton = new System.Windows.Forms.ToolStripButton();
             this.lodViewerME3 = new Pixelmade.Lazarus.LodViewerControl();
             this.lodViewerME2 = new Pixelmade.Lazarus.LodViewerControl();
+            this.checkBoxMultiple = new System.Windows.Forms.CheckBox();
             this.tableLayoutPanel1.SuspendLayout();
             this.tableLayoutPanel2.SuspendLayout();
             this.groupBox3.SuspendLayout();
@@ -342,7 +343,7 @@ namespace Pixelmade.Lazarus
             this.groupBox5.Location = new System.Drawing.Point(360, 3);
             this.groupBox5.Name = "groupBox5";
             this.groupBox5.Padding = new System.Windows.Forms.Padding(10);
-            this.groupBox5.Size = new System.Drawing.Size(207, 201);
+            this.groupBox5.Size = new System.Drawing.Size(307, 201);
             this.groupBox5.TabIndex = 5;
             this.groupBox5.TabStop = false;
             this.groupBox5.Text = "Misc";
@@ -351,11 +352,12 @@ namespace Pixelmade.Lazarus
             // 
             this.flowLayoutPanel4.Controls.Add(this.checkBoxTrack);
             this.flowLayoutPanel4.Controls.Add(this.checkBoxBones);
+            this.flowLayoutPanel4.Controls.Add(this.checkBoxMultiple);
             this.flowLayoutPanel4.Dock = System.Windows.Forms.DockStyle.Fill;
             this.flowLayoutPanel4.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
             this.flowLayoutPanel4.Location = new System.Drawing.Point(10, 23);
             this.flowLayoutPanel4.Name = "flowLayoutPanel4";
-            this.flowLayoutPanel4.Size = new System.Drawing.Size(187, 168);
+            this.flowLayoutPanel4.Size = new System.Drawing.Size(287, 168);
             this.flowLayoutPanel4.TabIndex = 1;
             // 
             // checkBoxTrack
@@ -766,6 +768,18 @@ namespace Pixelmade.Lazarus
             this.lodViewerME2.MouseMove += new System.Windows.Forms.MouseEventHandler(this.lodViewer_MouseMove);
             this.lodViewerME2.MouseUp += new System.Windows.Forms.MouseEventHandler(this.lodViewer_MouseUp);
             // 
+            // checkBoxMultiple
+            // 
+            this.checkBoxMultiple.AutoSize = true;
+            this.checkBoxMultiple.Checked = true;
+            this.checkBoxMultiple.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.checkBoxMultiple.Location = new System.Drawing.Point(3, 49);
+            this.checkBoxMultiple.Name = "checkBoxMultiple";
+            this.checkBoxMultiple.Size = new System.Drawing.Size(282, 17);
+            this.checkBoxMultiple.TabIndex = 2;
+            this.checkBoxMultiple.Text = "Adjust multiple vertices as a group (collapse otherwise)";
+            this.checkBoxMultiple.UseVisualStyleBackColor = true;
+            // 
             // Main
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -875,6 +889,7 @@ namespace Pixelmade.Lazarus
         private System.Windows.Forms.ToolStripButton toolStripOpen2;
         private System.Windows.Forms.ToolStripTextBox toolStripPath2;
         private System.Windows.Forms.CheckBox checkBoxBones;
+        private System.Windows.Forms.CheckBox checkBoxMultiple;
     }
 }
 
