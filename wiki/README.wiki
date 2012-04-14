@@ -1,5 +1,3 @@
-#summary README.
-
 *NOTE: Currently only supports PC and FemShep.*
 ----
 Normal use should look something like this:
