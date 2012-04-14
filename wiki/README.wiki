@@ -7,7 +7,7 @@ Normal use should look something like this:
   # Open ME2 save
   # Open ME3 save (should be the same character of ME2)
   # Edit mapping (skippable)
-  # Save modified ME3 save (will be saved on same folder as in 2. as "Save_1000.pcsav")
+  # Save modified ME3 save (will be saved on same folder as in 3. as "Save_1000.pcsav")
   # Switch to game, load Save_1000 and see results
   # Repeat 4-6 as needed
   # Exit
