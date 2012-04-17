@@ -61,7 +61,7 @@ namespace Pixelmade.Lazarus
             toolStrip1.Renderer = new MySR();
 
             me2Path = "C:\\Users\\Pedro Madeira\\Documents\\BioWare\\Mass Effect 2\\Save\\Naomi_12_Sentinel_150212\\";
-            me3Path = "C:\\Users\\Pedro Madeira\\Documents\\BioWare\\Mass Effect 3\\Save\\Naomi_12_Sentinel_210312_015c769\\";
+            me3Path = "C:\\Users\\Pedro Madeira\\Documents\\BioWare\\Mass Effect 3\\Save\\Naomi_12_Sentinel_170412_303422a\\";
         }
 
         private void lodViewer_MouseDown(object sender, MouseEventArgs e)
@@ -400,25 +400,140 @@ namespace Pixelmade.Lazarus
             }
         }
 
-        void AdjustBones2()
+        void AdjustVectorParams()
         {
-            List<Gibbed.MassEffect2.FileFormats.Save.OffsetBone> bones2 = me2Save.PlayerRecord.Appearance.MorphHead.OffsetBones;
-            List<Gibbed.MassEffect3.FileFormats.Save.MorphHead.OffsetBone> bones3 = me3Save.Player.Appearance.MorphHead.OffsetBones;
+            List<Gibbed.MassEffect2.FileFormats.Save.VectorParameter> params2 = me2Save.PlayerRecord.Appearance.MorphHead.VectorParameters;
+            List<Gibbed.MassEffect3.FileFormats.Save.MorphHead.VectorParameter> params3 = me3Save.Player.Appearance.MorphHead.VectorParameters;
 
-            foreach (Gibbed.MassEffect2.FileFormats.Save.OffsetBone b2 in bones2)
+            foreach (Gibbed.MassEffect3.FileFormats.Save.MorphHead.VectorParameter p3 in params3)
             {
-                foreach (Gibbed.MassEffect3.FileFormats.Save.MorphHead.OffsetBone b3 in bones3)
+                foreach (Gibbed.MassEffect2.FileFormats.Save.VectorParameter p2 in params2)
                 {
-                    if (String.Compare(b2.Name, b3.Name, true) == 0)
+                    if (String.Compare(p3.Name, p2.Name, true) == 0)
                     {
-                        Vector3 b3v = new Vector3(b3.Offset.X, b3.Offset.Y, b3.Offset.Z);
-                        Vector3 b2v = new Vector3(b2.Offset.X, b2.Offset.Y, b2.Offset.Z);
-                        Vector3 hv = b3v + (b2v - b3v) / 1f;
-                        b3.Offset.X = hv.X;
-                        b3.Offset.Y = hv.Y;
-                        b3.Offset.Z = hv.Z;
+                        p3.Value.A = p2.Value.A;
+                        p3.Value.B = p2.Value.B;
+                        p3.Value.G = p2.Value.G;
+                        p3.Value.R = p2.Value.R;
                         break;
                     }
+                }
+                switch (p3.Name)
+                {
+                    case "HED_Blush_Vector":
+                        p3.Value.B *= 0.75f;
+                        p3.Value.G *= 0.5f;
+                        p3.Value.R *= 1.0f;
+                        break;
+                    case "SkinTone":
+                        break;
+                    case "HED_Spec_Add_Vector": // Skin specular strength
+                        p3.Value.B *= 1.5f;
+                        p3.Value.G *= 1.5f;
+                        p3.Value.R *= 1.5f;
+                        break;
+                    case "EYE_Iris_Colour_Vector": // Eye colour
+                        p3.Value.B *= 0.75f;
+                        p3.Value.G *= 0.75f;
+                        p3.Value.R *= 0.75f;
+                        break;
+                    case "HED_Hair_Colour_Vector": // Hair unnoticeable
+                        p3.Value.B *= 1.0f;
+                        p3.Value.G *= 1.0f;
+                        p3.Value.R *= 1.0f;
+                        break;
+                    case "HED_Addn_Colour_Vector": // Brow colour
+                        p3.Value.B *= 1.00f;
+                        p3.Value.G *= 1.00f;
+                        p3.Value.R *= 1.25f; // 1.5
+                        break;
+                    case "blonde": // Not sure, affects brow too
+                        p3.Value.B *= 1.0f;
+                        p3.Value.G *= 1.0f;
+                        p3.Value.R *= 1.0f;
+                        break;
+                    case "HED_EyeShadow_Tint_Vector": // Eyeshadow
+                        p3.Value.B *= 1.0f;
+                        p3.Value.G *= 1.0f;
+                        p3.Value.R *= 1.0f;
+                        break;
+                    case "HED_Aniso_Colour01_Vector":
+                        p3.Value.B *= 1.0f;
+                        p3.Value.G *= 1.0f;
+                        p3.Value.R *= 1.0f;
+                        break;
+                    case "HED_Aniso_Colour02_Vector":
+                        p3.Value.B *= 1.0f;
+                        p3.Value.G *= 1.0f;
+                        p3.Value.R *= 1.0f;
+                        break;
+                    case "Highlight1Color": // Hair colour 1
+                        p3.Value.B *= 1.05f; //1.1
+                        p3.Value.G *= 1.05f; //1.1
+                        p3.Value.R *= 1.15f; //1.25
+                        break;
+                    case "Highlight2Color": // Hair colour 2
+                        p3.Value.B *= 1.0f;
+                        p3.Value.G *= 1.0f;
+                        p3.Value.R *= 1.0f;
+                        break;
+                }
+            }
+        }
+
+        void AdjustScalarParams()
+        {
+            List<Gibbed.MassEffect2.FileFormats.Save.ScalarParameter> params2 = me2Save.PlayerRecord.Appearance.MorphHead.ScalarParameters;
+            List<Gibbed.MassEffect3.FileFormats.Save.MorphHead.ScalarParameter> params3 = me3Save.Player.Appearance.MorphHead.ScalarParameters;
+
+            foreach (Gibbed.MassEffect3.FileFormats.Save.MorphHead.ScalarParameter p3 in params3)
+            {
+                foreach (Gibbed.MassEffect2.FileFormats.Save.ScalarParameter p2 in params2)
+                {
+                    if (String.Compare(p3.Name, p2.Name, true) == 0)
+                    {
+                        p3.Value = p2.Value;
+                        break;
+                    }
+                }
+                switch (p3.Name)
+                {
+                    case "HED_Addn_Spec_Lips_Scalar": // Lips spec strength
+                        p3.Value *= 1.4f;
+                        break;
+                    case "HED_Addn_SPwr_Lips_Scalar": // Lips spec power
+                        p3.Value *= 2.0f; // 0.9
+                        break;
+                    case "Highlight1SpecExp_Scalar":
+                        p3.Value *= 0.05f;
+                        break;
+                    case "Highlight2SpecExp_Scalar":
+                        p3.Value += 25f;
+                        break;
+                    case "Hair_Spec_Aniso_Exp_Scalar":
+                        //p3.Value *= 2.0f;
+                        break;
+                    case "HAIR_Spec_Contribution_Scalar":
+                        //p3.Value *= 010.0f;
+                        break;
+                    case "HAIR_SPwr_Scalar":
+                        p3.Value *= 0.5f;
+                        break;
+                    case "HED_Addn_Blowout_Scalar": // Brow strength
+                        p3.Value *= 1.15f;
+                        break;
+                    case "HED_EyeShadow_Tint_Scalar": // Eye lash\shadow strength
+                        p3.Value *= 0.75f;
+                        break;
+                    case "HED_SPwr_Scalar": // Skin shininess
+                        p3.Value *= 0.45f;
+                        break;
+                    case "Hightlight1Intensity":
+                        p3.Value *= 3.5f;
+                        break;
+                    case "Hightlight2Intensity":
+                        p3.Value *= 1.5f;
+                        break;
                 }
             }
         }
@@ -429,6 +544,8 @@ namespace Pixelmade.Lazarus
             {
                 AdjustLOD();
                 if (checkBoxBones.Checked) AdjustBones();
+                if (checkBoxScalar.Checked) AdjustScalarParams();
+                if (checkBoxVector.Checked) AdjustVectorParams();
 
                 string savename = Path.GetDirectoryName(openFileDialog3.FileName) + "\\Save_1000.pcsav";
                 using (var file = File.Open(savename, FileMode.Create))
