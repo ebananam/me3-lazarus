@@ -34,7 +34,9 @@ namespace Pixelmade.Lazarus
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
             this.groupBox3 = new System.Windows.Forms.GroupBox();
+            this.lodViewerME3 = new Pixelmade.Lazarus.LodViewerControl();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.lodViewerME2 = new Pixelmade.Lazarus.LodViewerControl();
             this.flowLayoutPanel1 = new System.Windows.Forms.FlowLayoutPanel();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.flowLayoutPanel2 = new System.Windows.Forms.FlowLayoutPanel();
@@ -53,6 +55,8 @@ namespace Pixelmade.Lazarus
             this.flowLayoutPanel4 = new System.Windows.Forms.FlowLayoutPanel();
             this.checkBoxTrack = new System.Windows.Forms.CheckBox();
             this.checkBoxBones = new System.Windows.Forms.CheckBox();
+            this.checkBoxScalar = new System.Windows.Forms.CheckBox();
+            this.checkBoxVector = new System.Windows.Forms.CheckBox();
             this.checkBoxMultiple = new System.Windows.Forms.CheckBox();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -95,8 +99,6 @@ namespace Pixelmade.Lazarus
             this.toolStripSave = new System.Windows.Forms.ToolStripButton();
             this.toolStripSeparator7 = new System.Windows.Forms.ToolStripSeparator();
             this.helpToolStripButton = new System.Windows.Forms.ToolStripButton();
-            this.lodViewerME3 = new Pixelmade.Lazarus.LodViewerControl();
-            this.lodViewerME2 = new Pixelmade.Lazarus.LodViewerControl();
             this.tableLayoutPanel1.SuspendLayout();
             this.tableLayoutPanel2.SuspendLayout();
             this.groupBox3.SuspendLayout();
@@ -159,6 +161,24 @@ namespace Pixelmade.Lazarus
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Preview (ME3)";
             // 
+            // lodViewerME3
+            // 
+            this.lodViewerME3.CameraOffset = new Microsoft.Xna.Framework.Vector3(0F, 0F, 0F);
+            this.lodViewerME3.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.lodViewerME3.Location = new System.Drawing.Point(10, 23);
+            this.lodViewerME3.MinVertex = 0;
+            this.lodViewerME3.Mode = "Normal";
+            this.lodViewerME3.Name = "lodViewerME3";
+            this.lodViewerME3.Size = new System.Drawing.Size(430, 397);
+            this.lodViewerME3.TabIndex = 1;
+            this.lodViewerME3.ViewAngle = 0F;
+            this.lodViewerME3.ViewAngleVert = 1.570796F;
+            this.lodViewerME3.ViewDistance = 50F;
+            this.lodViewerME3.MouseClick += new System.Windows.Forms.MouseEventHandler(this.lodViewerME3_MouseClick);
+            this.lodViewerME3.MouseDown += new System.Windows.Forms.MouseEventHandler(this.lodViewer_MouseDown);
+            this.lodViewerME3.MouseMove += new System.Windows.Forms.MouseEventHandler(this.lodViewer_MouseMove);
+            this.lodViewerME3.MouseUp += new System.Windows.Forms.MouseEventHandler(this.lodViewer_MouseUp);
+            // 
             // groupBox1
             // 
             this.groupBox1.Controls.Add(this.lodViewerME2);
@@ -170,6 +190,24 @@ namespace Pixelmade.Lazarus
             this.groupBox1.TabIndex = 6;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Preview (ME2)";
+            // 
+            // lodViewerME2
+            // 
+            this.lodViewerME2.CameraOffset = new Microsoft.Xna.Framework.Vector3(0F, 0F, 0F);
+            this.lodViewerME2.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.lodViewerME2.Location = new System.Drawing.Point(10, 23);
+            this.lodViewerME2.MinVertex = 0;
+            this.lodViewerME2.Mode = "Normal";
+            this.lodViewerME2.Name = "lodViewerME2";
+            this.lodViewerME2.Size = new System.Drawing.Size(430, 397);
+            this.lodViewerME2.TabIndex = 1;
+            this.lodViewerME2.ViewAngle = 0F;
+            this.lodViewerME2.ViewAngleVert = 1.570796F;
+            this.lodViewerME2.ViewDistance = 50F;
+            this.lodViewerME2.MouseClick += new System.Windows.Forms.MouseEventHandler(this.lodViewerME2_MouseClick);
+            this.lodViewerME2.MouseDown += new System.Windows.Forms.MouseEventHandler(this.lodViewer_MouseDown);
+            this.lodViewerME2.MouseMove += new System.Windows.Forms.MouseEventHandler(this.lodViewer_MouseMove);
+            this.lodViewerME2.MouseUp += new System.Windows.Forms.MouseEventHandler(this.lodViewer_MouseUp);
             // 
             // flowLayoutPanel1
             // 
@@ -352,6 +390,8 @@ namespace Pixelmade.Lazarus
             // 
             this.flowLayoutPanel4.Controls.Add(this.checkBoxTrack);
             this.flowLayoutPanel4.Controls.Add(this.checkBoxBones);
+            this.flowLayoutPanel4.Controls.Add(this.checkBoxScalar);
+            this.flowLayoutPanel4.Controls.Add(this.checkBoxVector);
             this.flowLayoutPanel4.Controls.Add(this.checkBoxMultiple);
             this.flowLayoutPanel4.Dock = System.Windows.Forms.DockStyle.Fill;
             this.flowLayoutPanel4.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
@@ -382,12 +422,36 @@ namespace Pixelmade.Lazarus
             this.checkBoxBones.Text = "Adjust OffsetBones";
             this.checkBoxBones.UseVisualStyleBackColor = true;
             // 
+            // checkBoxScalar
+            // 
+            this.checkBoxScalar.AutoSize = true;
+            this.checkBoxScalar.Checked = true;
+            this.checkBoxScalar.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.checkBoxScalar.Location = new System.Drawing.Point(3, 49);
+            this.checkBoxScalar.Name = "checkBoxScalar";
+            this.checkBoxScalar.Size = new System.Drawing.Size(141, 17);
+            this.checkBoxScalar.TabIndex = 4;
+            this.checkBoxScalar.Text = "Adjust ScalarParameters";
+            this.checkBoxScalar.UseVisualStyleBackColor = true;
+            // 
+            // checkBoxVector
+            // 
+            this.checkBoxVector.AutoSize = true;
+            this.checkBoxVector.Checked = true;
+            this.checkBoxVector.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.checkBoxVector.Location = new System.Drawing.Point(3, 72);
+            this.checkBoxVector.Name = "checkBoxVector";
+            this.checkBoxVector.Size = new System.Drawing.Size(142, 17);
+            this.checkBoxVector.TabIndex = 3;
+            this.checkBoxVector.Text = "Adjust VectorParameters";
+            this.checkBoxVector.UseVisualStyleBackColor = true;
+            // 
             // checkBoxMultiple
             // 
             this.checkBoxMultiple.AutoSize = true;
             this.checkBoxMultiple.Checked = true;
             this.checkBoxMultiple.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.checkBoxMultiple.Location = new System.Drawing.Point(3, 49);
+            this.checkBoxMultiple.Location = new System.Drawing.Point(3, 95);
             this.checkBoxMultiple.Name = "checkBoxMultiple";
             this.checkBoxMultiple.Size = new System.Drawing.Size(282, 17);
             this.checkBoxMultiple.TabIndex = 2;
@@ -744,42 +808,6 @@ namespace Pixelmade.Lazarus
             this.helpToolStripButton.Size = new System.Drawing.Size(23, 22);
             this.helpToolStripButton.Text = "He&lp";
             // 
-            // lodViewerME3
-            // 
-            this.lodViewerME3.CameraOffset = new Microsoft.Xna.Framework.Vector3(0F, 0F, 0F);
-            this.lodViewerME3.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.lodViewerME3.Location = new System.Drawing.Point(10, 23);
-            this.lodViewerME3.MinVertex = 0;
-            this.lodViewerME3.Mode = "Normal";
-            this.lodViewerME3.Name = "lodViewerME3";
-            this.lodViewerME3.Size = new System.Drawing.Size(430, 397);
-            this.lodViewerME3.TabIndex = 1;
-            this.lodViewerME3.ViewAngle = 0F;
-            this.lodViewerME3.ViewAngleVert = 1.570796F;
-            this.lodViewerME3.ViewDistance = 50F;
-            this.lodViewerME3.MouseClick += new System.Windows.Forms.MouseEventHandler(this.lodViewerME3_MouseClick);
-            this.lodViewerME3.MouseDown += new System.Windows.Forms.MouseEventHandler(this.lodViewer_MouseDown);
-            this.lodViewerME3.MouseMove += new System.Windows.Forms.MouseEventHandler(this.lodViewer_MouseMove);
-            this.lodViewerME3.MouseUp += new System.Windows.Forms.MouseEventHandler(this.lodViewer_MouseUp);
-            // 
-            // lodViewerME2
-            // 
-            this.lodViewerME2.CameraOffset = new Microsoft.Xna.Framework.Vector3(0F, 0F, 0F);
-            this.lodViewerME2.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.lodViewerME2.Location = new System.Drawing.Point(10, 23);
-            this.lodViewerME2.MinVertex = 0;
-            this.lodViewerME2.Mode = "Normal";
-            this.lodViewerME2.Name = "lodViewerME2";
-            this.lodViewerME2.Size = new System.Drawing.Size(430, 397);
-            this.lodViewerME2.TabIndex = 1;
-            this.lodViewerME2.ViewAngle = 0F;
-            this.lodViewerME2.ViewAngleVert = 1.570796F;
-            this.lodViewerME2.ViewDistance = 50F;
-            this.lodViewerME2.MouseClick += new System.Windows.Forms.MouseEventHandler(this.lodViewerME2_MouseClick);
-            this.lodViewerME2.MouseDown += new System.Windows.Forms.MouseEventHandler(this.lodViewer_MouseDown);
-            this.lodViewerME2.MouseMove += new System.Windows.Forms.MouseEventHandler(this.lodViewer_MouseMove);
-            this.lodViewerME2.MouseUp += new System.Windows.Forms.MouseEventHandler(this.lodViewer_MouseUp);
-            // 
             // Main
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -890,6 +918,8 @@ namespace Pixelmade.Lazarus
         private System.Windows.Forms.ToolStripTextBox toolStripPath2;
         private System.Windows.Forms.CheckBox checkBoxBones;
         private System.Windows.Forms.CheckBox checkBoxMultiple;
+        private System.Windows.Forms.CheckBox checkBoxScalar;
+        private System.Windows.Forms.CheckBox checkBoxVector;
     }
 }
 
