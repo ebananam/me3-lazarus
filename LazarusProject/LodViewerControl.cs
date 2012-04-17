@@ -128,6 +128,7 @@ namespace Pixelmade.Lazarus
         }
         public void SetMapData(VertexMapping mapping, bool inverse)
         {
+            if (mapping == null) return;
             this.mapping = mapping;
             inverseMapping = inverse;
 
@@ -232,6 +233,7 @@ namespace Pixelmade.Lazarus
         }
         public void SetVertexColor(VertexPositionColor[] array, int index, Color color)
         {
+            if (array == null) return;
             array[index * 6].Color = color;
             array[index * 6 + 1].Color = color;
             array[index * 6 + 2].Color = color;
@@ -329,6 +331,8 @@ namespace Pixelmade.Lazarus
 
         public void IncreasePointSize(List<ME2Vector> data)
         {
+            if (data == null) return;
+
             POINT_SIZE *= 2f;
             SELECTED_POINT_SIZE *= 2f;
 
@@ -336,6 +340,8 @@ namespace Pixelmade.Lazarus
         }
         public void DecreasePointSize(List<ME2Vector> data)
         {
+            if (data == null) return;
+
             POINT_SIZE /= 2f;
             SELECTED_POINT_SIZE /= 2f;
 
@@ -343,6 +349,8 @@ namespace Pixelmade.Lazarus
         }
         public void IncreasePointSize(List<ME3Vector> data)
         {
+            if (data == null) return;
+
             POINT_SIZE *= 2f;
             SELECTED_POINT_SIZE *= 2f;
 
@@ -350,6 +358,8 @@ namespace Pixelmade.Lazarus
         }
         public void DecreasePointSize(List<ME3Vector> data)
         {
+            if (data == null) return;
+
             POINT_SIZE /= 2f;
             SELECTED_POINT_SIZE /= 2f;
 

@@ -53,6 +53,7 @@ namespace Pixelmade.Lazarus
             this.flowLayoutPanel4 = new System.Windows.Forms.FlowLayoutPanel();
             this.checkBoxTrack = new System.Windows.Forms.CheckBox();
             this.checkBoxBones = new System.Windows.Forms.CheckBox();
+            this.checkBoxMultiple = new System.Windows.Forms.CheckBox();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.newToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -96,7 +97,6 @@ namespace Pixelmade.Lazarus
             this.helpToolStripButton = new System.Windows.Forms.ToolStripButton();
             this.lodViewerME3 = new Pixelmade.Lazarus.LodViewerControl();
             this.lodViewerME2 = new Pixelmade.Lazarus.LodViewerControl();
-            this.checkBoxMultiple = new System.Windows.Forms.CheckBox();
             this.tableLayoutPanel1.SuspendLayout();
             this.tableLayoutPanel2.SuspendLayout();
             this.groupBox3.SuspendLayout();
@@ -381,6 +381,18 @@ namespace Pixelmade.Lazarus
             this.checkBoxBones.TabIndex = 1;
             this.checkBoxBones.Text = "Adjust OffsetBones";
             this.checkBoxBones.UseVisualStyleBackColor = true;
+            // 
+            // checkBoxMultiple
+            // 
+            this.checkBoxMultiple.AutoSize = true;
+            this.checkBoxMultiple.Checked = true;
+            this.checkBoxMultiple.CheckState = System.Windows.Forms.CheckState.Checked;
+            this.checkBoxMultiple.Location = new System.Drawing.Point(3, 49);
+            this.checkBoxMultiple.Name = "checkBoxMultiple";
+            this.checkBoxMultiple.Size = new System.Drawing.Size(282, 17);
+            this.checkBoxMultiple.TabIndex = 2;
+            this.checkBoxMultiple.Text = "Adjust multiple vertices as a group (collapse otherwise)";
+            this.checkBoxMultiple.UseVisualStyleBackColor = true;
             // 
             // menuStrip1
             // 
@@ -767,18 +779,6 @@ namespace Pixelmade.Lazarus
             this.lodViewerME2.MouseDown += new System.Windows.Forms.MouseEventHandler(this.lodViewer_MouseDown);
             this.lodViewerME2.MouseMove += new System.Windows.Forms.MouseEventHandler(this.lodViewer_MouseMove);
             this.lodViewerME2.MouseUp += new System.Windows.Forms.MouseEventHandler(this.lodViewer_MouseUp);
-            // 
-            // checkBoxMultiple
-            // 
-            this.checkBoxMultiple.AutoSize = true;
-            this.checkBoxMultiple.Checked = true;
-            this.checkBoxMultiple.CheckState = System.Windows.Forms.CheckState.Checked;
-            this.checkBoxMultiple.Location = new System.Drawing.Point(3, 49);
-            this.checkBoxMultiple.Name = "checkBoxMultiple";
-            this.checkBoxMultiple.Size = new System.Drawing.Size(282, 17);
-            this.checkBoxMultiple.TabIndex = 2;
-            this.checkBoxMultiple.Text = "Adjust multiple vertices as a group (collapse otherwise)";
-            this.checkBoxMultiple.UseVisualStyleBackColor = true;
             // 
             // Main
             // 

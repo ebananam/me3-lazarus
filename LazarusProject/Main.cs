@@ -111,6 +111,23 @@ namespace Pixelmade.Lazarus
             lodViewerME2.SetData(me2Save.PlayerRecord.Appearance.MorphHead.LOD0Vertices);
             lodViewerME3.SetData(me3Save.Player.Appearance.MorphHead.Lod0Vertices);
             */
+
+            try
+            {
+                using (var file = File.Open(me2Path + "AutoSave.pcsav", FileMode.Open))
+                {
+                    LoadME2Save(file);
+                    file.Close();
+                }
+                using (var file = File.Open(me3Path + "QuickSave.pcsav", FileMode.Open))
+                {
+                    LoadME3save(file);
+                    file.Close();
+                }
+                openFileDialog3.FileName = me3Path + "QuickSave.pcsav";
+            }
+            catch (Exception) { }
+
             try
             {
                 mapping = (VertexMapping)LoadObject("lod_mapping", typeof(VertexMapping));
@@ -121,6 +138,9 @@ namespace Pixelmade.Lazarus
             {
                 //CreateMapping();
             }
+
+            SetupEditor();
+
             comboBoxDisplay.SelectedIndex = 2;
         }
 
@@ -263,6 +283,7 @@ namespace Pixelmade.Lazarus
         {
             if (e.KeyCode == Keys.Add)
             {
+                if (me2Save == null || me3Save == null) return;
                 lodViewerME2.IncreasePointSize(me2Save.PlayerRecord.Appearance.MorphHead.LOD0Vertices);
                 lodViewerME3.IncreasePointSize(me3Save.Player.Appearance.MorphHead.Lod0Vertices);
                 lodViewerME2.SetMapData(mapping, false);
@@ -272,6 +293,7 @@ namespace Pixelmade.Lazarus
             }
             else if (e.KeyCode == Keys.Subtract)
             {
+                if (me2Save == null || me3Save == null) return;
                 lodViewerME2.DecreasePointSize(me2Save.PlayerRecord.Appearance.MorphHead.LOD0Vertices);
                 lodViewerME3.DecreasePointSize(me3Save.Player.Appearance.MorphHead.Lod0Vertices);
                 lodViewerME2.SetMapData(mapping, false);
@@ -290,6 +312,7 @@ namespace Pixelmade.Lazarus
             }
             else if (e.KeyCode == Keys.Space)
             {
+                e.SuppressKeyPress = true;
                 checkBoxVerified.Checked = !checkBoxVerified.Checked;
             }
             else if (e.KeyCode == Keys.R)
@@ -356,7 +379,7 @@ namespace Pixelmade.Lazarus
                 }
             }
         }
-
+        
         void AdjustBones()
         {
             List<Gibbed.MassEffect2.FileFormats.Save.OffsetBone> bones2 = me2Save.PlayerRecord.Appearance.MorphHead.OffsetBones;
@@ -370,7 +393,30 @@ namespace Pixelmade.Lazarus
                     {
                         b3.Offset.X = b2.Offset.X;
                         b3.Offset.Y = b2.Offset.Y;
-                        b3.Offset.Z = b3.Offset.Z;
+                        b3.Offset.Z = b2.Offset.Z;
+                        break;
+                    }
+                }
+            }
+        }
+
+        void AdjustBones2()
+        {
+            List<Gibbed.MassEffect2.FileFormats.Save.OffsetBone> bones2 = me2Save.PlayerRecord.Appearance.MorphHead.OffsetBones;
+            List<Gibbed.MassEffect3.FileFormats.Save.MorphHead.OffsetBone> bones3 = me3Save.Player.Appearance.MorphHead.OffsetBones;
+
+            foreach (Gibbed.MassEffect2.FileFormats.Save.OffsetBone b2 in bones2)
+            {
+                foreach (Gibbed.MassEffect3.FileFormats.Save.MorphHead.OffsetBone b3 in bones3)
+                {
+                    if (String.Compare(b2.Name, b3.Name, true) == 0)
+                    {
+                        Vector3 b3v = new Vector3(b3.Offset.X, b3.Offset.Y, b3.Offset.Z);
+                        Vector3 b2v = new Vector3(b2.Offset.X, b2.Offset.Y, b2.Offset.Z);
+                        Vector3 hv = b3v + (b2v - b3v) / 1f;
+                        b3.Offset.X = hv.X;
+                        b3.Offset.Y = hv.Y;
+                        b3.Offset.Z = hv.Z;
                         break;
                     }
                 }
