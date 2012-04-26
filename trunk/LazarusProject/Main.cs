@@ -21,9 +21,11 @@ namespace Pixelmade.Lazarus
 
     public partial class Main : Form
     {
+        private const string DefaultName = "lod_mapping";
         ME2Save me2Save;
         ME3Save me3Save;
         VertexMapping mapping;
+        string currentMappingName;
         string me2Path, me3Path;
 
         bool usingViewer;
@@ -112,6 +114,7 @@ namespace Pixelmade.Lazarus
             lodViewerME3.SetData(me3Save.Player.Appearance.MorphHead.Lod0Vertices);
             */
 
+
             try
             {
                 using (var file = File.Open(me2Path + "AutoSave.pcsav", FileMode.Open))
@@ -129,24 +132,25 @@ namespace Pixelmade.Lazarus
             catch (Exception) { }
 
             try
-            {
-                mapping = (VertexMapping)LoadObject("lod_mapping", typeof(VertexMapping));
-                //lodViewerME2.SetMapData(mapping, false);
-                //lodViewerME3.SetMapData(mapping, true);
+            {   // Load lod mappings file list and select the default
+                PopulateLodMappingsXmlList();
+                listBoxLodMappings.SelectedIndex = listBoxLodMappings.Items.IndexOf(DefaultName);
             }
-            catch (FileNotFoundException)
-            {
-                //CreateMapping();
-            }
+            catch (Exception) { }
 
             SetupEditor();
 
             comboBoxDisplay.SelectedIndex = 2;
         }
 
-                private void Main_FormClosing(object sender, FormClosingEventArgs e)
+        private string GetSelectedMappingName()
         {
-            if(mapping != null) SaveObject("lod_mapping", mapping);
+            return (string)listBoxLodMappings.SelectedItem;
+        }
+
+        private void Main_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            SaveLodMapping(GetSelectedMappingName());
         }
 
         private void comboBoxDisplay_SelectedIndexChanged(object sender, EventArgs e)
@@ -189,6 +193,25 @@ namespace Pixelmade.Lazarus
 
             lodViewerME2.SetMapData(mapping, false);
             lodViewerME3.SetMapData(mapping, true);
+        }
+
+        private void LoadLodMapping(string mappingName)
+        {
+            try
+            {
+                mapping = (VertexMapping)LoadObject(mappingName, typeof(VertexMapping));
+                //lodViewerME2.SetMapData(mapping, false);
+                //lodViewerME3.SetMapData(mapping, true);
+            }
+            catch (FileNotFoundException)
+            {
+                //CreateMapping();
+            }
+        }
+
+        private void SaveLodMapping(string mappingName)
+        {
+            if (mapping != null) SaveObject(mappingName, mapping);
         }
 
         private void trackBarIndexRange_ValueChanged(object sender, EventArgs e)
@@ -538,6 +561,16 @@ namespace Pixelmade.Lazarus
             }
         }
 
+        private void PopulateLodMappingsXmlList()
+        {
+            listBoxLodMappings.Items.Clear();
+            string[] mappingFiles = Directory.GetFiles(Application.StartupPath, "*.xml");
+            foreach (string mappingFile in mappingFiles)
+            {
+                listBoxLodMappings.Items.Add(Path.GetFileNameWithoutExtension(mappingFile));
+            }
+        }
+
         private void saveToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (openFileDialog3.FileName != "")
@@ -566,7 +599,7 @@ namespace Pixelmade.Lazarus
 
         private void newToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            File.Delete(Application.StartupPath + "\\" + "lod_mapping" + ".xml");
+            File.Delete(Path.Combine(Application.StartupPath, GetSelectedMappingName() + ".xml"));
 
             CreateMapping();
         }
@@ -630,6 +663,33 @@ namespace Pixelmade.Lazarus
             if (me2Save != null && me3Save != null && mapping == null)
             {
                 CreateMapping();
+            }
+        }
+
+        private void listBoxLodMappings_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (listBoxLodMappings.SelectedIndex > -1)
+            {
+                if (currentMappingName != null)
+                {
+                    string message = string.Format("Save changes to '{0}.xml' before loading '{1}.xml'?", currentMappingName, GetSelectedMappingName());
+                    DialogResult result = MessageBox.Show(message, "Lazarus", MessageBoxButtons.YesNoCancel);
+                    if (result != DialogResult.Cancel)
+                    {
+                        if (result == DialogResult.Yes)
+                        {
+                            SaveLodMapping(currentMappingName);
+                        }
+                    }
+                    else
+                    { // Cancelled so re-select current mapping name (without re-firing this event)
+                        this.listBoxLodMappings.SelectedIndexChanged -= new System.EventHandler(this.listBoxLodMappings_SelectedIndexChanged);
+                        listBoxLodMappings.SelectedIndex = listBoxLodMappings.Items.IndexOf(currentMappingName);
+                        this.listBoxLodMappings.SelectedIndexChanged += new System.EventHandler(this.listBoxLodMappings_SelectedIndexChanged);
+                    }
+                }
+                currentMappingName = GetSelectedMappingName();
+                LoadLodMapping(currentMappingName);
             }
         }
     }

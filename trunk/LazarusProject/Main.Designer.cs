@@ -58,6 +58,9 @@ namespace Pixelmade.Lazarus
             this.checkBoxScalar = new System.Windows.Forms.CheckBox();
             this.checkBoxVector = new System.Windows.Forms.CheckBox();
             this.checkBoxMultiple = new System.Windows.Forms.CheckBox();
+            this.groupBox6 = new System.Windows.Forms.GroupBox();
+            this.flowLayoutPanel5 = new System.Windows.Forms.FlowLayoutPanel();
+            this.listBoxLodMappings = new System.Windows.Forms.ListBox();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.newToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -112,6 +115,8 @@ namespace Pixelmade.Lazarus
             this.flowLayoutPanel3.SuspendLayout();
             this.groupBox5.SuspendLayout();
             this.flowLayoutPanel4.SuspendLayout();
+            this.groupBox6.SuspendLayout();
+            this.flowLayoutPanel5.SuspendLayout();
             this.menuStrip1.SuspendLayout();
             this.toolStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -214,6 +219,7 @@ namespace Pixelmade.Lazarus
             this.flowLayoutPanel1.Controls.Add(this.groupBox2);
             this.flowLayoutPanel1.Controls.Add(this.groupBox4);
             this.flowLayoutPanel1.Controls.Add(this.groupBox5);
+            this.flowLayoutPanel1.Controls.Add(this.groupBox6);
             this.flowLayoutPanel1.Dock = System.Windows.Forms.DockStyle.Fill;
             this.flowLayoutPanel1.Location = new System.Drawing.Point(6, 466);
             this.flowLayoutPanel1.Name = "flowLayoutPanel1";
@@ -457,6 +463,36 @@ namespace Pixelmade.Lazarus
             this.checkBoxMultiple.TabIndex = 2;
             this.checkBoxMultiple.Text = "Adjust multiple vertices as a group (collapse otherwise)";
             this.checkBoxMultiple.UseVisualStyleBackColor = true;
+            // 
+            // groupBox6
+            // 
+            this.groupBox6.Controls.Add(this.flowLayoutPanel5);
+            this.groupBox6.Location = new System.Drawing.Point(673, 3);
+            this.groupBox6.Name = "groupBox6";
+            this.groupBox6.Padding = new System.Windows.Forms.Padding(10);
+            this.groupBox6.Size = new System.Drawing.Size(236, 201);
+            this.groupBox6.TabIndex = 6;
+            this.groupBox6.TabStop = false;
+            this.groupBox6.Text = "Lod Mappings";
+            // 
+            // flowLayoutPanel5
+            // 
+            this.flowLayoutPanel5.Controls.Add(this.listBoxLodMappings);
+            this.flowLayoutPanel5.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.flowLayoutPanel5.FlowDirection = System.Windows.Forms.FlowDirection.TopDown;
+            this.flowLayoutPanel5.Location = new System.Drawing.Point(10, 23);
+            this.flowLayoutPanel5.Name = "flowLayoutPanel5";
+            this.flowLayoutPanel5.Size = new System.Drawing.Size(216, 168);
+            this.flowLayoutPanel5.TabIndex = 1;
+            // 
+            // listBoxLodMappings
+            // 
+            this.listBoxLodMappings.FormattingEnabled = true;
+            this.listBoxLodMappings.Location = new System.Drawing.Point(3, 3);
+            this.listBoxLodMappings.Name = "listBoxLodMappings";
+            this.listBoxLodMappings.Size = new System.Drawing.Size(210, 160);
+            this.listBoxLodMappings.TabIndex = 0;
+            this.listBoxLodMappings.SelectedIndexChanged += new System.EventHandler(this.listBoxLodMappings_SelectedIndexChanged);
             // 
             // menuStrip1
             // 
@@ -841,6 +877,8 @@ namespace Pixelmade.Lazarus
             this.groupBox5.ResumeLayout(false);
             this.flowLayoutPanel4.ResumeLayout(false);
             this.flowLayoutPanel4.PerformLayout();
+            this.groupBox6.ResumeLayout(false);
+            this.flowLayoutPanel5.ResumeLayout(false);
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
             this.toolStrip1.ResumeLayout(false);
@@ -920,6 +958,9 @@ namespace Pixelmade.Lazarus
         private System.Windows.Forms.CheckBox checkBoxMultiple;
         private System.Windows.Forms.CheckBox checkBoxScalar;
         private System.Windows.Forms.CheckBox checkBoxVector;
+        private System.Windows.Forms.GroupBox groupBox6;
+        private System.Windows.Forms.FlowLayoutPanel flowLayoutPanel5;
+        private System.Windows.Forms.ListBox listBoxLodMappings;
     }
 }
 
