@@ -61,9 +61,10 @@ namespace Pixelmade.Lazarus
             InitializeComponent();
 
             toolStrip1.Renderer = new MySR();
-
+#if DEBUG
             me2Path = "C:\\Users\\Pedro Madeira\\Documents\\BioWare\\Mass Effect 2\\Save\\Naomi_12_Sentinel_150212\\";
             me3Path = "C:\\Users\\Pedro Madeira\\Documents\\BioWare\\Mass Effect 3\\Save\\Naomi_12_Sentinel_170412_303422a\\";
+#endif
         }
 
         private void lodViewer_MouseDown(object sender, MouseEventArgs e)
@@ -138,7 +139,7 @@ namespace Pixelmade.Lazarus
             }
             catch (Exception) { }
 
-            SetupEditor();
+            SetupViewers();
 
             comboBoxDisplay.SelectedIndex = 2;
         }
@@ -200,12 +201,11 @@ namespace Pixelmade.Lazarus
             try
             {
                 mapping = (VertexMapping)LoadObject(mappingName, typeof(VertexMapping));
-                //lodViewerME2.SetMapData(mapping, false);
-                //lodViewerME3.SetMapData(mapping, true);
+                SetupViewers();
             }
             catch (FileNotFoundException)
             {
-                //CreateMapping();
+                CreateMapping();
             }
         }
 
@@ -260,20 +260,32 @@ namespace Pixelmade.Lazarus
 
                 if (n != -1)
                 {
-                    if ((ModifierKeys & Keys.Control) != 0) mapping.Mapping[trackBarIndex.Value].Add(n);
-                    else if ((ModifierKeys & Keys.Alt) != 0) mapping.Mapping[trackBarIndex.Value].Remove(n);
-                    
-                    labelMapping.Text = "{";
-                    foreach (int i in mapping.Mapping[trackBarIndex.Value]) labelMapping.Text += i.ToString() + ", ";
-                    if (labelMapping.Text.Length > 1) labelMapping.Text = labelMapping.Text.Substring(0, labelMapping.Text.Length - 2);
-                    labelMapping.Text += "}";
-
-                    lodViewerME2.SetMapSelection(trackBarIndex.Value, trackBarRange.Value);
-                    lodViewerME3.SetMapSelection(trackBarIndex.Value, trackBarRange.Value);
-                    lodViewerME2.RefreshMapData();
-                    lodViewerME3.RefreshMapData();
+                    if ((ModifierKeys & Keys.Control) != 0)
+                    {
+                        mapping.Mapping[trackBarIndex.Value].Add(n);
+                        UpdateMapping();
+                    }
+                    else if ((ModifierKeys & Keys.Alt) != 0)
+                    {
+                        mapping.Mapping[trackBarIndex.Value].Remove(n);
+                        UpdateMapping();
+                    }
                 }
             }
+        }
+        void UpdateMapping()
+        {
+            labelMapping.Text = "{";
+            foreach (int i in mapping.Mapping[trackBarIndex.Value]) labelMapping.Text += i.ToString() + ", ";
+            if (labelMapping.Text.Length > 1) labelMapping.Text = labelMapping.Text.Substring(0, labelMapping.Text.Length - 2);
+            labelMapping.Text += "}";
+
+            lodViewerME2.SetMapSelection(trackBarIndex.Value, trackBarRange.Value);
+            lodViewerME3.SetMapSelection(trackBarIndex.Value, trackBarRange.Value);
+            lodViewerME2.RefreshMapData();
+            lodViewerME3.RefreshMapData();
+
+            mapping.Modified = true;
         }
 
         Object LoadObject(string filename, Type type)
@@ -626,7 +638,7 @@ namespace Pixelmade.Lazarus
                 };
 
                 toolStripPath2.Text = openFileDialog2.FileName;
-                SetupEditor();
+                SetupViewers();
             }
         }
 
@@ -643,11 +655,11 @@ namespace Pixelmade.Lazarus
                 };
 
                 toolStripPath3.Text = openFileDialog3.FileName;
-                SetupEditor();
+                SetupViewers();
             }
         }
 
-        void SetupEditor()
+        void SetupViewers()
         {
             if (me2Save != null)
             {
@@ -672,20 +684,23 @@ namespace Pixelmade.Lazarus
             {
                 if (currentMappingName != null)
                 {
-                    string message = string.Format("Save changes to '{0}.xml' before loading '{1}.xml'?", currentMappingName, GetSelectedMappingName());
-                    DialogResult result = MessageBox.Show(message, "Lazarus", MessageBoxButtons.YesNoCancel);
-                    if (result != DialogResult.Cancel)
+                    if (mapping.Modified)
                     {
-                        if (result == DialogResult.Yes)
+                        string message = string.Format("Save changes to '{0}.xml' before loading '{1}.xml'?", currentMappingName, GetSelectedMappingName());
+                        DialogResult result = MessageBox.Show(message, "Lazarus", MessageBoxButtons.YesNoCancel);
+                        if (result != DialogResult.Cancel)
                         {
-                            SaveLodMapping(currentMappingName);
+                            if (result == DialogResult.Yes)
+                            {
+                                SaveLodMapping(currentMappingName);
+                            }
                         }
-                    }
-                    else
-                    { // Cancelled so re-select current mapping name (without re-firing this event)
-                        this.listBoxLodMappings.SelectedIndexChanged -= new System.EventHandler(this.listBoxLodMappings_SelectedIndexChanged);
-                        listBoxLodMappings.SelectedIndex = listBoxLodMappings.Items.IndexOf(currentMappingName);
-                        this.listBoxLodMappings.SelectedIndexChanged += new System.EventHandler(this.listBoxLodMappings_SelectedIndexChanged);
+                        else
+                        { // Cancelled so re-select current mapping name (without re-firing this event)
+                            this.listBoxLodMappings.SelectedIndexChanged -= new System.EventHandler(this.listBoxLodMappings_SelectedIndexChanged);
+                            listBoxLodMappings.SelectedIndex = listBoxLodMappings.Items.IndexOf(currentMappingName);
+                            this.listBoxLodMappings.SelectedIndexChanged += new System.EventHandler(this.listBoxLodMappings_SelectedIndexChanged);
+                        }
                     }
                 }
                 currentMappingName = GetSelectedMappingName();
