@@ -30,10 +30,11 @@ namespace Pixelmade.Lazarus
     /// </summary>
     class LodViewerControl : GraphicsDeviceControl
     {
-        public float POINT_SIZE = 0.08f, SELECTED_POINT_SIZE = 0.06f;
+        public float POINT_SIZE = 0.08f;
+        private float _SELECTED_POINT_SIZE = 0.75f;
         BasicEffect effect;
         Stopwatch timer;
-        VertexPositionColor[] vertexArray, thresholdArray, mapArray;
+        VertexPositionColor[] vertexArray, thresholdArray, mapArray, stripArray;
         float viewAngle, viewDistance, viewAngleVert = MathHelper.PiOver2;
         Vector3 lookAt = Vector3.Zero;
         Vector3 cameraOffset = Vector3.Zero;
@@ -43,6 +44,7 @@ namespace Pixelmade.Lazarus
         string mode = "Normal";
         int pickX, pickY, pickIndex;
         List<int> lastPickSet = new List<int>();
+        StripSegments strips;
 
         #region Properties
         public float ViewAngle
@@ -80,6 +82,9 @@ namespace Pixelmade.Lazarus
         }
         public Vector3 CameraOffset { get { return cameraOffset; } set { cameraOffset = value; } }
         public string Mode { get { return mode; } set { mode = value; } }
+        public float SELECTED_POINT_SIZE { get { return POINT_SIZE * _SELECTED_POINT_SIZE; } }
+        public float SelectedPointSizeRatio { get { return _SELECTED_POINT_SIZE; } set { _SELECTED_POINT_SIZE = value; } }
+        public StripSegments Strips { get { return strips; } set { strips = value; } }
         #endregion
 
         public void SetData(List<ME2Vector> me2Data)
@@ -102,6 +107,13 @@ namespace Pixelmade.Lazarus
                     color += colorDelta;
                 }
                 vertexArray = vertices.ToArray();
+
+                vertices = new List<VertexPositionColor>();
+                foreach (ME2Vector vec in me2Data)
+                {
+                    vertices.Add(new VertexPositionColor(new Vector3(vec.X, vec.Y, vec.Z), Color.White));
+                }
+                stripArray = vertices.ToArray();
             }
         }
         public void SetData(List<ME3Vector> me3Data)
@@ -190,8 +202,10 @@ namespace Pixelmade.Lazarus
         {
             if (mapping == null) return;
 
-            int start = index - range / 2;
-            int end = index + range / 2 + 1;
+            //int start = index - range / 2;
+            //int end = index + range / 2 + 1;
+            int start = index;
+            int end = index + range;
 
             if (start < 0) start = 0;
             if (end > 2232) end = 2232;
@@ -334,7 +348,6 @@ namespace Pixelmade.Lazarus
             if (data == null) return;
 
             POINT_SIZE *= 2f;
-            SELECTED_POINT_SIZE *= 2f;
 
             SetData(data);
         }
@@ -343,7 +356,6 @@ namespace Pixelmade.Lazarus
             if (data == null) return;
 
             POINT_SIZE /= 2f;
-            SELECTED_POINT_SIZE /= 2f;
 
             SetData(data);
         }
@@ -352,7 +364,6 @@ namespace Pixelmade.Lazarus
             if (data == null) return;
 
             POINT_SIZE *= 2f;
-            SELECTED_POINT_SIZE *= 2f;
 
             SetData(data);
         }
@@ -361,7 +372,6 @@ namespace Pixelmade.Lazarus
             if (data == null) return;
 
             POINT_SIZE /= 2f;
-            SELECTED_POINT_SIZE /= 2f;
 
             SetData(data);
         }
@@ -433,6 +443,17 @@ namespace Pixelmade.Lazarus
                 GraphicsDevice.RasterizerState = RasterizerState.CullNone;
                 effect.CurrentTechnique.Passes[0].Apply();
                 GraphicsDevice.DrawUserPrimitives<VertexPositionColor>(PrimitiveType.TriangleList, mapArray, 0, mapArray.Length / 3);
+            }
+
+            if (strips != null)
+            {
+                GraphicsDevice.Clear(ClearOptions.DepthBuffer, Color.Black, float.MaxValue, 0);
+                effect.CurrentTechnique.Passes[0].Apply();
+
+                foreach (var strip in strips)
+                {
+                    if(strip.Value >= 3) GraphicsDevice.DrawUserPrimitives<VertexPositionColor>(PrimitiveType.TriangleStrip, stripArray, strip.Key, strip.Value-2);
+                }
             }
         }
     }

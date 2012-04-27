@@ -28,12 +28,19 @@ namespace Pixelmade.Lazarus
         [DataMember]
         float thresholdIncrement = 0.02f;
 
+        bool modified; // Non persistent
+
         public HashSet<int>[] Mapping { get { return mapping; } }
         public bool[] Ignore { get { return ignore; } }
         public bool[] Verified { get { return verified; } }
         public float[] Thresholds { get { return thresholds; } }
         public float MinThreshold { get { return minThreshold; } }
         public float MaxThreshold { get { return maxThreshold; } }
+        public bool Modified
+        {
+            get { return modified; }
+            set { modified = value; }
+        }
 
         public VertexMapping(List<ME2Vector> me2Data, List<ME3Vector> me3Data)
         {

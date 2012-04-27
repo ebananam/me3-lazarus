@@ -174,7 +174,9 @@ namespace Pixelmade.Lazarus
             this.lodViewerME3.MinVertex = 0;
             this.lodViewerME3.Mode = "Normal";
             this.lodViewerME3.Name = "lodViewerME3";
+            this.lodViewerME3.SelectedPointSizeRatio = 0.75F;
             this.lodViewerME3.Size = new System.Drawing.Size(430, 397);
+            this.lodViewerME3.Strips = null;
             this.lodViewerME3.TabIndex = 1;
             this.lodViewerME3.ViewAngle = 0F;
             this.lodViewerME3.ViewAngleVert = 1.570796F;
@@ -204,7 +206,9 @@ namespace Pixelmade.Lazarus
             this.lodViewerME2.MinVertex = 0;
             this.lodViewerME2.Mode = "Normal";
             this.lodViewerME2.Name = "lodViewerME2";
+            this.lodViewerME2.SelectedPointSizeRatio = 0.75F;
             this.lodViewerME2.Size = new System.Drawing.Size(430, 397);
+            this.lodViewerME2.Strips = null;
             this.lodViewerME2.TabIndex = 1;
             this.lodViewerME2.ViewAngle = 0F;
             this.lodViewerME2.ViewAngleVert = 1.570796F;
@@ -473,7 +477,7 @@ namespace Pixelmade.Lazarus
             this.groupBox6.Size = new System.Drawing.Size(236, 201);
             this.groupBox6.TabIndex = 6;
             this.groupBox6.TabStop = false;
-            this.groupBox6.Text = "Lod Mappings";
+            this.groupBox6.Text = "Mappings";
             // 
             // flowLayoutPanel5
             // 
