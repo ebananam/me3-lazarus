@@ -192,6 +192,18 @@ namespace Pixelmade.Lazarus
         {
             mapping = new VertexMapping(me2Save.PlayerRecord.Appearance.MorphHead.LOD0Vertices, me3Save.Player.Appearance.MorphHead.Lod0Vertices);
 
+            // Save newly created map and repopulate list
+            string filename = DefaultName;
+            if (File.Exists(DefaultName + ".xml"))
+            {
+                int i = 1;
+                for (; File.Exists(DefaultName + "_" + i + ".xml"); i++) ;
+                filename += "_" + i;
+            }
+            SaveLodMapping(filename);
+            PopulateLodMappingsXmlList();
+            listBoxLodMappings.SelectedIndex = listBoxLodMappings.Items.IndexOf(filename);
+
             lodViewerME2.SetMapData(mapping, false);
             lodViewerME3.SetMapData(mapping, true);
         }
