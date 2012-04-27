@@ -57,7 +57,6 @@
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="GraphicsDeviceService.cs" />
-    <Compile Include="StripSegments.cs" />
     <Compile Include="VertexMapping.cs" />
     <Compile Include="Main.cs">
       <SubType>Form</SubType>
